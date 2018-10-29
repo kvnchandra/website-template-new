@@ -41,6 +41,20 @@ function main() {
 		
 }());
 
+var login_nav = document.getElementById('login-nav');
+//check if user has already login or not
+
+window.onload = function(){
+  if (localStorage.getItem("isLoggedIn") == 1) {
+    login_nav.innerHTML = "Log Out";
+    login_nav.href = "index.html";
+    localStorage.setItem("isLoggedIn", 0);
+  }
+  else{
+    login_nav.innerHTML = "Log In";
+    login_nav.href = "login.html";
+  }
+};
 
 }
 main();
