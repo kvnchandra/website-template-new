@@ -33,7 +33,7 @@ class Main extends CI_Controller {
                 $this->load->view('index', $data);
             }
             else{
-                $data['message'] = 'Username atau Password salah.';
+                $data['message'] = 'Invalid Username or Password.';
                 $this->load->view('login', $data);
             }
         }else {
@@ -54,7 +54,7 @@ class Main extends CI_Controller {
 
     public function check_status(){
         if($this->login_model->get_user(true)){
-            $data['message'] = "Username telah digunakan.";
+            $data['message'] = "Username is already exist.";
             $this->load->view('signup', $data);
         }else{
             $this->login_model->set_user();
