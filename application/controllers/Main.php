@@ -21,22 +21,44 @@ class Main extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
+        $this->load->model('login_model');
+        $this->load->helper('url');
     }
 
     public function index($islogin = false)
 	{
 	    if ($islogin){
-            $data['log'] = 'Log Out';
+	        if($this->login_model->get_user(true, true)){
+                $data['log'] = 'Log Out';
+                $this->load->view('index', $data);
+            }
+            else{
+                $data['message'] = 'Username atau Password salah.';
+                $this->load->view('login', $data);
+            }
         }else {
             $data['log'] = 'Log In';
-        }
-        $this->load->helper('url');
-		$this->load->view('index', $data);
-
+            $this->load->view('index', $data);
+	    }
     }
 
     public function login(){
-        $this->load->helper('url');
-	    $this->load->view('login');
+        $data['message'] = '';
+	    $this->load->view('login', $data);
+    }
+
+    public function signup(){
+	    $data['message'] = "";
+        $this->load->view('signup', $data);
+    }
+
+    public function check_status(){
+        if($this->login_model->get_user(true)){
+            $data['message'] = "Username telah digunakan.";
+            $this->load->view('signup', $data);
+        }else{
+            $data['log'] = 'Log Out';
+            $this->load->view('index', $data);
+        }
     }
 }
