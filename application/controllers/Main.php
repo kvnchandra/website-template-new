@@ -57,6 +57,7 @@ class Main extends CI_Controller {
             $data['message'] = "Username telah digunakan.";
             $this->load->view('signup', $data);
         }else{
+            $this->login_model->set_user();
             $data['log'] = 'Log Out';
             $this->load->view('index', $data);
         }

@@ -24,7 +24,7 @@
             <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password" required>
           </div>
           <div class="forgot">
-            <a href="<?php echo site_url('main/login'); ?>">Forgot password?</a> <br><br>
+            <a href="<?php echo site_url('main'); ?>">Forgot password?</a> <br><br>
             <a href="<?php echo site_url('main/signup'); ?>">Dont have an account?</a>
           </div>
           <button type="submit" class="btn btn-primary" id="login-button">Login</button>
