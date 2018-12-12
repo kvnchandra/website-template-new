@@ -18,6 +18,7 @@ class Main extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+
 	public function __construct()
     {
         parent::__construct();
@@ -28,9 +29,9 @@ class Main extends CI_Controller {
     public function index($islogin = false)
 	{
 	    if ($islogin){
-	        if($this->login_model->get_user(true, true)){
-                $data['log'] = 'Log Out';
-                $this->load->view('index', $data);
+	        $query = $this->login_model->get_user_info(true, true);
+	        if(sizeof($query) > 0){
+                $this->home($query[0]['id']);
             }
             else{
                 $data['message'] = 'Invalid Username or Password.';
@@ -38,6 +39,7 @@ class Main extends CI_Controller {
             }
         }else {
             $data['log'] = 'Log In';
+            $data['id'] = 0;
             $this->load->view('index', $data);
 	    }
     }
@@ -53,13 +55,42 @@ class Main extends CI_Controller {
     }
 
     public function check_status(){
-        if($this->login_model->get_user(true)){
+        if($this->login_model->get_user_info(true)){
             $data['message'] = "Username is already exist.";
             $this->load->view('signup', $data);
         }else{
             $this->login_model->set_user();
-            $data['log'] = 'Log Out';
-            $this->load->view('index', $data);
+            $query = $this->login_model->get_user_info(true, true);
+            $this->home($query[0]['id']);
         }
+    }
+
+    public function profile($id){
+        $query = $this->login_model->get_user_by_id($id);
+        $data['id'] = $query[0]['id'];
+        $data['username'] = $query[0]['username'];
+        $data['password'] = $query[0]['password'];
+        $data['log'] = 'Log Out';
+        $this->load->view('profile', $data);
+    }
+
+    public function update_user($id){
+        //if ($this->input->post('new_password') == $this->input->post('confirm_password')){
+            $this->login_model->update($id);
+            $this->home($id);
+        //}
+    }
+
+    public function delete_user($id){
+	    $this->login_model->delete($id);
+        $data['log'] = 'Log In';
+        $data['id'] = 0;
+	    $this->load->view('index', $data);
+    }
+
+    public function home($id){
+        $data['log'] = 'Log Out';
+        $data['id'] = $id;
+        $this->load->view('index', $data);
     }
 }
