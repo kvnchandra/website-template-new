@@ -69,16 +69,24 @@ class Main extends CI_Controller {
         $query = $this->login_model->get_user_by_id($id);
         $data['id'] = $query[0]['id'];
         $data['username'] = $query[0]['username'];
-        $data['password'] = $query[0]['password'];
         $data['log'] = 'Log Out';
+        $data['message'] = '';
         $this->load->view('profile', $data);
     }
 
     public function update_user($id){
-        //if ($this->input->post('new_password') == $this->input->post('confirm_password')){
+        if ($this->input->post('new_password') == $this->input->post('confirm_password')){
             $this->login_model->update($id);
             $this->home($id);
-        //}
+        }
+        else{
+            $query = $this->login_model->get_user_by_id($id);
+            $data['id'] = $query[0]['id'];
+            $data['username'] = $query[0]['username'];
+            $data['log'] = 'Log Out';
+            $data['message'] = "Password doesn't match";
+            $this->load->view('profile', $data);
+        }
     }
 
     public function delete_user($id){

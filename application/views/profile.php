@@ -96,7 +96,11 @@
                         </div>
                     </div>
 
-                    <div id="success"></div>
+                    <div id="success"><?php
+                        if($message != ''){
+                            echo "<div class='alert alert-danger'><strong>".$message."</strong></div>";
+                        }
+                        ?></div>
                     <input type="submit" class="btn btn-custom btn-lg" value="Edit Profile">
                 </form>
             </div>
