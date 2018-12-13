@@ -40,6 +40,7 @@ class Main extends CI_Controller {
         }else {
             $data['log'] = 'Log In';
             $data['id'] = 0;
+            $data['message'] = '';
             $this->load->view('index', $data);
 	    }
     }
@@ -93,12 +94,14 @@ class Main extends CI_Controller {
 	    $this->login_model->delete($id);
         $data['log'] = 'Log In';
         $data['id'] = 0;
+        $data['message'] = '';
 	    $this->load->view('index', $data);
     }
 
     public function home($id){
         $data['log'] = 'Log Out';
         $data['id'] = $id;
+        $data['message'] = '';
         $this->load->view('index', $data);
     }
 }
